@@ -1,0 +1,38 @@
+Comandos usados practica 1
+
+su - 
+cd /home/luis
+nano /etc/apt/sources.list
+cat /etc/apt/sources.list
+apt update
+apt upgrade
+apt install bashtop
+apt install git
+git clone
+ls
+cd bashtop
+apt install bashtop
+bashtop
+sudo apt purge bashtop
+cd ..
+rm -rf bashtop
+apt autoremove
+
+============================================
+
+Comandos usados practica 2
+
+sudo crontab -e
+sudo apt update && sudo apt upgrade
+sudo reboot
+sudo crontab -l
+clear
+su -
+cd ..
+apt install at
+cd /tmp
+at now + 1 minute
+rm -rf /tmp/*
+ls
+
+============================================
