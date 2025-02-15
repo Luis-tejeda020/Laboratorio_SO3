@@ -1,0 +1,65 @@
+Modulo III: Tareas avanzadas y servicios de red
+-----------------------------------------------
+
+Comandos usados practica 1
+
+date
+time
+sudo nano /etc/default/grub
+sudo update-grub
+sudo reboot
+init=/bin/bash
+mount -o rw,remount /
+vi /etc/shadow
+:wq
+passwd luis
+exec /sbin/init
+
+============================================
+
+Comandos usados practica 2
+
+date
+ls
+nano cbum_olympia.sh
+#!/bin/bash
+chmod +x cbum_olympia.sh
+./cbum_olympia.sh
+exit
+su
+rm cbum_olympia.sh
+cd ~
+clear
+cd /home/luis
+ip a
+ifconfig
+apt install net-tools
+nano cbum_red.sh
+echo
+
+============================================
+
+Comandos usados practica 3
+
+date
+ip a
+ping 192.168.5.206
+sudo apt update
+sudo apt install openssh-server
+sudo systemctl status
+ssh luis@192.168.5.206
+ssh-keygen
+cd /etc/ssh
+ls
+mkdir
+cd ..
+touch authorized_keys
+nano authorized_keys
+(chmod 644 authorized_keys)
+(chmod 700 .ssh)
+(systemctl restart sshd)
+(Exit)
+
+============================================
+
+
