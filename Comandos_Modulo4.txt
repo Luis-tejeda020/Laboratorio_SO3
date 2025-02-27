@@ -1,0 +1,68 @@
+=========================================================
+Comandos usados practica 1
+
+su
+apt update -y
+apt upgrade -y
+apt install nginx -y
+sudo systemctl status nginx
+sudo systemctl start nginx
+sudo systemctl enable nginx
+sudo nano /etc/hosts
+cd /var/www
+mkdir Luis.Tejeda.com
+chown -R $USER:$USER /var/www/Luis.Tejeda.com
+sudo nano index.html
+cd /etc/nginx/sites-available
+sudo nano Luis.Tejeda.com
+sudo ln -s
+ls
+clear
+sudo systemctl reload nginx
+sudo nano index1.html
+
+==========================================================
+==========================================================
+
+Comandos usados practica 2
+
+su
+apt update
+apt upgrade
+apt install postfix
+sudo systemctl status postfix
+sudo systemctl start postfix
+sudo systemctl enable postfix
+nano /etc/postfix/main.cf
+nano /etc/postfix/sasl/sasl_passwd
+sudo postmap
+chmod 0600 /etc/postfix/sasl/sasl_passwd
+chmod 0600 /etc/postfix/sasl/sasl_passwd.db
+sudo systemctl restart postfix
+apt install mailutils
+mail os3conadrian@gmail.com
+
+=========================================================
+=========================================================
+
+Comandos usados practica 3
+
+sudo apt update && sudo apt upgrade -y
+sudo apt install cups
+sudo apt install cups-pdf
+sudo apt install ufw
+sudo ufw allow 631/tcp
+sudo ufw allow ssh
+sudo cupsctl --remote-admin --remote-any --share-printers
+sudo systemctl status cups
+sudo systemctl enable cups
+sudo systemctl start cups
+sudo systemctl restart cups
+ip a
+ls /var/spool/cups-pdf
+cd /var/spool/cups-pdf
+cd ANONYMOUS/
+cd SPOOL/
+
+========================================================
+
