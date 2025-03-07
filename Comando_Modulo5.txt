@@ -1,0 +1,15 @@
+==================================================================
+Comando usados practica 1
+
+clear
+ls
+mkdir
+cd
+touch
+sudo apt install rsync
+rsync -azP 
+nano /home/luis/Documentos/sync_script.sh
+chmod +x
+crontab -e
+cat
+==================================================================
