@@ -1,0 +1,51 @@
+Comandos usados practica 1
+
+> su
+> sudo apt update
+> sudo apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
+> curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+> echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+> sudo apt install -y docker-ce docker-ce-cli containerd.io
+> sudo systemctl start docker
+> sudo systemctl enable docker
+> sudo docker --version
+> sudo usermod -aG docker $USER
+> newgrp docker
+> docker pull nginx
+> sudo mkdir -p /home/website
+> docker run -d -p 8888:80 -v /home/website:/usr/share/nginx/html --name mi_nginx nginx
+> sudo nano /home/website/index.html
+> sudo chmod 644 /home/website/index.html
+> docker ps -a
+> docker logs mi_nginx
+> docker restart mi_nginx
+
+===========================================================================================
+
+Comandos usados practica 2
+
+> su
+> docker pull portainer/portainer-ce:latest
+> docker volume create portainer_data
+> docker run -d -p 9000:9000 --name portainer \
+> docker ps -a | grep nginx
+
+===========================================================================================
+
+Comandos usados practica 3
+
+> docker --version
+> docker-compose --version
+> mkdir wordpress
+> cd wordpress
+> sudo nano docker-compose.yml
+> sudo systemctl status apache2
+> sudo systemctl stop apache2
+> docker stop ffa
+> docker-compose up -d
+> docker ps
+> docker-compose logs
+> docker-compose logs wordpress
+> docker-compose stop, start, down, down -v
+
+============================================================================================
