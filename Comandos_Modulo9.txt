@@ -1,0 +1,90 @@
+Comandos usados practica 1
+
+> sudo apt install -y apt-transport-https software-properties-common wget gnupg2
+> wget -q http://www.webmin.com/jcameron-key.asc -O- 
+> sudo apt-key add -
+> sudo add-apt-repository
+> sudo apt update
+> sudo apt install -y webmin
+
+===========================================================================================
+
+Comandos usados practica 2
+
+> sudo apt update
+> sudo apt install -y wget unzip
+> wget https://releases.hashicorp.com...
+> unzip terraform_1.11.3_linux_amd64.zip
+> sudo mv terraform /usr/local/bin
+> terraform -v
+> ssh-keygen -t rsa -b 4096
+> mkdir terraform-do
+> cd
+> nano main.tf
+> su
+> ls
+> cd ..
+> cat ∼/.ssh/id_rsa.pub
+> terraform init
+> terraform apply
+> terraform validate
+> ssh -i /root/.ssh/digitalocean_key root@[ip de digitalocean]
+
+===========================================================================================
+
+Comandos usados practica 3
+
+> linuxlogo -L debian
+> cd /
+> sudo apt install python3 -y
+> python3 -version
+> sudo apt install ansible -y
+> ansible -y
+> sudo apt install software-properties-common -y
+> ssh -i ∼/.ssh/id_rsa root@[ip de digitalocean]
+> adduser ansible1
+> usermod -aG sudo ansible1
+> rsync --archive --chown=ansible1:ansible1 ∼/.ssh /home/ansible1
+> exit
+> ssh ansible1@[ip]
+> sudo mkdir /etc/ansible
+> sudo nano /etc/ansible/hosts
+> ansible linux -m ping
+> ansible windows -m win_ping
+
+Windows
+> Set-ExecutionPolicy RemoteSigned -Force
+> Enale-PSRemoting -Force
+> Set-Item WSMan:\localhost\Service\Auth\Basic -value $True
+> Restart-Service WinRM
+> Install-module -Name PSWindowsUpdate -Force
+> New-NetFirewallRule -Name "WinRM HTTP" -Protocol TCP -LocalPort 5985 -Action Allow
+> New-LocalUser -Name "ansible2" -Password (ConvertTo-SecureString "ansible2" -AsPlainText -Force)
+> Add-LocalGroupMember -Group "Administrators" -Member "ansible2"
+> winrm create winrm/config/Listener?Address=*+Transport=HTTP
+> winrm enumerate winrm/config/listener
+ 
+============================================================================================
+
+Comandos usados practica 4
+
+> linuxlogo -L debian
+> date
+> su
+> ansible windows -m ansible.windows.win_copy -a "src=C:/Users/ansible2/Desktop/Acabar.txt
+  dest=C:/Users/ansible2/Documents/Acabar.txt remote_src=yes"
+> ansible linux -i /etc/ansible/hosts -m reboot --become
+ 
+============================================================================================
+
+Comandos usados practica 5
+
+> sudo nano install-notepad.yml
+> ansible-playbook install-notepad.yml
+> sudo nano reboot_linux.yml
+> ansible-playbook reboot_linux.yml
+> date
+> ansible-playbook [windows o linux] -vvvv
+> linuxlogo -L debian
+
+============================================================================================
