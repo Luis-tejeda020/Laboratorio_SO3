@@ -1,68 +1,106 @@
 =========================================================
-Comandos usados practica 1
+Comandos usados practica 1: servidor HTTP apache2/nginx
 
-su
-apt update -y
-apt upgrade -y
-apt install nginx -y
-sudo systemctl status nginx
-sudo systemctl start nginx
-sudo systemctl enable nginx
-sudo nano /etc/hosts
-cd /var/www
-mkdir Luis.Tejeda.com
-chown -R $USER:$USER /var/www/Luis.Tejeda.com
-sudo nano index.html
-cd /etc/nginx/sites-available
-sudo nano Luis.Tejeda.com
-sudo ln -s
-ls
-clear
-sudo systemctl reload nginx
-sudo nano index1.html
+- su
+- sudo apt update && sudo apt install nginx -y
+- sudo systemctl status nginx
+- sudo systemctl start nginx
+- sudo systemctl enable nginx
+- sudo nano /etc/hosts [127.0.0.1 (nombre)]
+- cd /var/www
+- mkdir Luis.Tejeda.com
+- chown -R $USER:$USER /var/www/Luis.Tejeda.com
+- sudo nano index.html
+	<html>
+	<head>
+		<tittle>Saludos</tittle>
+	</head>
+	<body>
+		<h1>Hola Mundo</h1>
+	</body>
+	</html>
 
-==========================================================
-==========================================================
+- cd /etc/nginx/sites-available
+- sudo nano Luis.Tejeda.com
+server {
+	listen 80;
+	server_name Luis.Tejeda.com;
+	root /var/www/Luis.Tejeda.com;
+	index index.html;
 
-Comandos usados practica 2
+	location / {
+	try_files $uri $uri/ = 404;
+}
 
-su
-apt update
-apt upgrade
-apt install postfix
-sudo systemctl status postfix
-sudo systemctl start postfix
-sudo systemctl enable postfix
-nano /etc/postfix/main.cf
-nano /etc/postfix/sasl/sasl_passwd
-sudo postmap
-chmod 0600 /etc/postfix/sasl/sasl_passwd
-chmod 0600 /etc/postfix/sasl/sasl_passwd.db
-sudo systemctl restart postfix
-apt install mailutils
-mail os3conadrian@gmail.com
+- sudo ln -s /etc/nginx/sites-available/Luis.Tejeda.com /etc/nginx/sites-enabled
+- cd /etc/nginx/sites-enabled
+- sudo systemctl reload nginx
+- cd /var/www/Luis.Tejeda.com
+- sudo nano index1.html
+	<html>
+	<head>
+		<tittle>Mi Informacion</tittle>
+	</head>
+	<body>
+		<h1>Nombre: Luis Miguel Tejeda Jimenez</h1>
+		<p>Matricula: 20240804</p>
+		<p>Materia: Sistemas Operativos 3</p>
+	</body>
+	</html>
+- cd /etc/nginx/sites-available/
+- sudo nano Luis.Tejeda.com
+server {
+	listen 8080;
+	server_name Luis.Tejeda.com;
+	root /var/www/Luis.Tejeda.com;
+	index index.html;
 
-=========================================================
-=========================================================
+	location / {
+	try_files $uri $uri/ = 404;
+}
+- sudo systemctl reload nginx
+=================================================================
 
-Comandos usados practica 3
+Comandos usados practica 2: servidor de correos
 
-sudo apt update && sudo apt upgrade -y
-sudo apt install cups
-sudo apt install cups-pdf
-sudo apt install ufw
-sudo ufw allow 631/tcp
+- su
+- apt update
+- apt upgrade
+- apt install postfix mailutils -y 
+- sudo systemctl status postfix
+- sudo systemctl start postfix
+- sudo systemctl enable postfix
+- nano /etc/postfix/main.cf
+	relayhost = [smtp.gmail.com]:587
+	smtp_use_tls = yes
+	smtp_sasl_auth_enable = yes
+	smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+	smtp_sasl_security_options = noanonymous
+
+- nano /etc/postfix/sasl/sasl_passwd
+[smtp.gmail.com]:587 [correo electronico]: Contraseña de app 
+- sudo postmap /etc/postfix/sasl_passwd
+- sudo chmod 600 /etc/postfix/sasl/sasl_passwd*
+- sudo systemctl restart postfix
+- echo "Cuerpo del correo. Nombre: Luis Tejeda. Matricula: 20240804" | mail -s "Descripcion" os3conadrian@gmail.com
+
+=================================================================
+
+Comandos usados practica 3: Servidor de impresion
+
+- sudo apt update && sudo apt upgrade -y
+- sudo apt install cups cups-pdf -y
+- sudo systemctl status cups
+- sudo systemctl enable cups
+- sudo systemctl start cups
+- sudo systemctl restart cups
+- sudo apt install ufw
+- sudo systemctl enable --now cups
+- sudo cupsctl --remote-any --share-printers
+- sudo ufw allow 631/tcp
 sudo ufw allow ssh
-sudo cupsctl --remote-admin --remote-any --share-printers
-sudo systemctl status cups
-sudo systemctl enable cups
-sudo systemctl start cups
-sudo systemctl restart cups
 ip a
-ls /var/spool/cups-pdf
-cd /var/spool/cups-pdf
-cd ANONYMOUS/
-cd SPOOL/
+- ls /var/spool/cups-pdf/ANONYMOUS/
 
-========================================================
 
+==================================================================
