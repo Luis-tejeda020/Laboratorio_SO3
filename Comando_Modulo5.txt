@@ -1,15 +1,95 @@
-==================================================================
-Comando usados practica 1
+=============================================================================
+Comando usados practica 1: rsync
 
-clear
-ls
-mkdir
-cd
-touch
-sudo apt install rsync
-rsync -azP 
-nano /home/luis/Documentos/sync_script.sh
-chmod +x
-crontab -e
-cat
-==================================================================
+- mkdir -p /home/luis/Documentos/Archivos
+- cd /ruta/Archivos
+- touch archivo{1..100}.txt  
+- sudo apt update && sudo apt install -y rsync
+- rsync -az --delete /ruta/Archivos/ luis@[ip clon]:/ruta/Archivos/
+- nano /home/luis/Documentos/sync_script.sh
+	#!/bin/bash
+	rsync -az --delete /ruta/Archivos/ luis@[ip clon]:/ruta/Archivos/
+
+- chmod +x /home/luis/Documentos/sync_script.sh
+- crontab -e
+	* * * * * /home/luis/Documentos/sync_script.sh >> /var/log/sync.log 	2>&1
+- touch /home/luis/Documentos/Archivos/Archivos99.txt
+	[texto preferido]
+
+- ls/cat /home/luis/Documentos/Archivos/Archivos50.txt
+
+=============================================================================
+Comandos usados Practica 3: cluster/disp.
+
+- sudo apt update
+- sudo apt install -y apache2 keepalived
+- echo "<h1>Servidor 1</h1>" | sudo tee /var/www/html/index.html # Server1
+- echo "<h1>Servidor 2</h1>" | sudo tee /var/www/html/index.html # Server2
+- sudo nano /etc/keepalived/keepalived.conf
+	vrrp_instance VI_1 {
+  	  state BACKUP
+  	  interface eth0  # Reemplaza con tu interfaz (usar `ip a`)
+  	  virtual_router_id 51
+  	  priority 50
+  	  advert_int 1
+  	  authentication {
+    	    auth_type PASS
+    	    auth_pass 1234
+  	  }
+  	  virtual_ipaddress {
+    	    ip_flotante/24
+  	  }
+	}
+
+- sudo systemctl restart keepalived apache2
+
+=============================================================================
+Comandos usados Practica 2: Cluster
+
+# nodo1 nodo2
+- sudo apt update && sudo apt upgrade -y
+- sudo apt install -y pacemaker corosync pcs resource-agents
+- sudo passwd hacluster
+- sudo systemctl enable --now pcsd
+- sudo systemctl enable --now corosync
+- sudo systemctl enable --now pacemaker
+
+# nodo1
+- sudo pcs cluster auth nodo1 nodo2 -u hacluster -p [contraseña] --force
+- sudo pcs cluster setup --name mycluster nodo1 nodo2
+- sudo pcs cluster start --all
+- sudo pcs cluster enable --all
+- sudo pcs property set stonith-enabled=false
+- sudo pcs property set no-quorum-policy=ignore
+
+- sudo pcs resource create floating_ip ocf:heartbeat:IPaddr2 ip=[address] cidr_netmask=24 nic=eth0 op monitor interval=30s
+- sudo pcs status
+
+# Otra maquina
+- ping 192.168.1.100
+
+
+
+
+
+- sudo apt update
+- sudo apt install -y pacemaker corosync heartbeat
+- sudo nano /etc/corosync/corosync.conf
+	totem {
+	  version: 2
+  	  cluster_name: mi_cluster
+  	  transport: udpu
+  	  interface {
+    	    member {
+      	      memberaddr: nodo1_ip
+    	    }
+    	    member {
+      	      memberaddr: nodo2_ip
+    	    }
+   	  }
+	}
+ 
+- sudo crm configure primitive Virtual_IP ocf:heartbeat:IPaddr2 params ip="ip_flotante" cidr_netmask="24" op monitor interval="30s"
+- sudo systemctl start corosync pacemaker
+- sudo crm status
+=============================================================================
