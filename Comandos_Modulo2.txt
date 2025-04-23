@@ -1,38 +1,33 @@
 Comandos usados practica 1
 
-su - 
-cd /home/luis
-nano /etc/apt/sources.list
-cat /etc/apt/sources.list
-apt update
-apt upgrade
-apt install bashtop
+- su
+- cd /home/luis
+- cat /etc/apt/sources.list
+- ls /etc/apt/sources.list
+- sudo apt update && sudo apt full-upgrade -y
+- apt install bashtop
 apt install git
 git clone
 ls
 cd bashtop
 apt install bashtop
-bashtop
-sudo apt purge bashtop
+- bashtop
 cd ..
-rm -rf bashtop
-apt autoremove
+- sudo apt purge bashtop && sudo apt autoremove
 
 ============================================
 
 Comandos usados practica 2
 
-sudo crontab -e
-sudo apt update && sudo apt upgrade
-sudo reboot
-sudo crontab -l
-clear
-su -
-cd ..
-apt install at
-cd /tmp
-at now + 1 minute
-rm -rf /tmp/*
-ls
-
+- sudo crontab -e 
+- [0 23 * * * /usr/bin/apt update && /usr/bin/apt full-upgrade -y]
+- [0 3 * * 0 /sbin/reboot]
+- sudo crontab -l
+- clear
+- su
+- cd ..
+- apt install at
+- cd /tmp
+- echo "rm -rf /tmp/*" | at now + 1 minute
+- ls
 ============================================
