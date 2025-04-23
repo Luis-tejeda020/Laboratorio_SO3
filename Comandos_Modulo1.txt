@@ -5,51 +5,53 @@ time
 ============================================
 
 
-Comandos usados practica 2
+Comandos usados practica 2: Configuración de parametros de red.
 
 1. ip a
 2. clear
-3. su -
+3. su
 4. nano /etc/network/interfaces
-5. nmcli con add type ethernet ifane enp0s8 con-name static-enp0s8 ipv4.method manual ipv4.addresses 192.168.1.101/24 ipv4.gateway 192.168.1.1 ipv4.dns '8.8.8.8 8.8.4.4'
-6. nmcli
-7. nmtui 
+5. [NetworkManager] sudo nmcli con add type ethernet ifname enp0s3 con-name static-ip ipv4.method manual ipv4.addresses 192.168.1.101/24 ipv4.gateway 192.168.1.1 ipv4.dns "8.8.8.8 8.8.4.4"
+6. sudo systemctl restart NetworkManager
+6. sudo nmcli con mod static-ip ipv4.dns "8.8.8.8 8.8.4.4"
+7. sudo resolvectl dns enp0s3 8.8.8.8 8.8.4.4
+8. nmtui 
+9. nmcli
 ============================================
 
 
-Comandos usados practica 3
+Comandos usados practica 3: Gestion de Usuario y grupos
 
-1. su -
+1. su
 2. adduser luis2
-3. sudo visudo  
+3. sudo visudo  /  sudo usermod -aG sudo luis2
 4. groupadd guest
-5. usermod -aG guest | guest
+5. usermod -aG guest | guest  /  sudo usermod -aG guest luis2
 ls /home/
 6. cat /etc/group | grep guest
 6. usermod -aG sudo
-7. sudo deluser
-8. deluser -remove-home
-9. groupdel 
+7. sudo deluser --remove-home luis2
+8. sudo groupdel guest
 ============================================
 
 
-Comandos usados practica 4
-1. su - 
-2. mkdir
-3. cd 
-4. touch
-5. vi
+Comandos usados practica 4: Gestion de Permisos de archivos
+1. su
+2. mkdir materia
+3. cd materia
+4. touch estudiante.txt
+5. vi estudiante.txt
 6. :wq
-7. chmod 700
+7. chmod 700 estudiantes.txt
 8. ls -l
-9. chmod 070
+9. chmod 770 estudiantes.txt
 10. clear
 11. mkdir ../
-12. cp
+12. cp estudiantes.txt materia2/
 13. cd ../
 14. ls
 15. sudo cp
 16. cd ..
-17. rm -r
-18. sudo rm -r
+17. rm -r materia
+18. sudo rm -rf materia/
 ============================================
