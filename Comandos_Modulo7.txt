@@ -1,50 +1,73 @@
-Comandos usados practica 1
+=============================================================================
+Comandos usados practica 1: NFS
 
 Servidor
-sudo apt update
-sudo apt install nfs-kernel-server
-mkdir /home/OS3
-cd
-for i in {1..100}; do touch Adrian$i.txt; done
-ls
-cd ..
-sudo chmod -R 777
-sudo nano
-sudo systemctl restart/status nfs-kernel-server
+- sudo apt update && sudo apt install nfs-kernel-server -y
+- sudo mkdir -p /home/OS3  
+- cd /home/OS3  
+- for i in {1..100}; do sudo touch "Adrian${i}.txt"; done
+- sudo chown -R nobody:nogroup /home/OS3 
+- sudo chmod -R 755 /home/OS3  
+- sudo nano /etc/exports 
+	/home/OS3 *(ro,sync,no_subtree_check) 
+						 
+- sudo exportfs -a  
+- sudo systemctl restart nfs-kernel-server  
+
 
 Cliente
-apt update
-apt install nfs-kernel-server
-mkdir /srv/OS3
-sudo mount
-ls
-nano
-sudo reboot
-sudo exportfs -y
-df -h
+- sudo apt update && sudo apt install nfs-common -y   
+- sudo mkdir -p /mnt/OS3   
+- sudo mount [ip vm1]:/home/OS3 /mnt/OS3   
+- ls /mnt/OS3  
+- sudo nano /etc/fstab  
+	[ip vm1]:/home/OS3  /mnt/OS3  nfs  defaults  0  0  
 
-============================================
+- sudo mount -a  
+- sudo reboot  # Reiniciar y verificar que se monta solo  
+- sudo exportfs -y
+- df -h
 
-Comandos usados practica 2
+=============================================================================
 
-apt update
-apt install samba
-sudo systemctl enable/start/status/restart smbd
-sudo mkdir
-cd
-ls
-for i in {1..100}; do touch adrian$i.txt; done
-sudo chmod -R 777
-sudo chown -R 770
-nano
-sudo groupadd
-sudo useradd
-sudo ufw allow samba
-cat
-ls -la
+Comandos usados practica 2: SAMBA
 
-============================================
+- sudo apt update && sudo apt install samba -y  
+- sudo mkdir -p /srv/samba/share  
+- cd /srv/samba/share  
+- for i in {1..100}; do sudo touch "adrian${i}.txt"; done   
+- sudo chown -R root:users /srv/samba/share  
+- sudo chmod -R 775 /srv/samba/share  
+- sudo nano /etc/samba/smb.conf  
+	[share]  
+   	   comment = Samba Share  
+   	   path = /srv/samba/share  
+   	   browsable = yes  
+   	   read only = no  
+   	   valid users = @users  
+   	   create mask = 0664  
+   	   directory mask = 0775  
 
-Comandos usados practica 3
+- sudo groupadd smbusers  
+- sudo useradd -G smbusers adrian  
+- sudo smbpasswd -a adrian
+- sudo systemctl restart smbd nmbd
 
-============================================
+- cat /srv/samba/share/adrian99.txt 
+
+=============================================================================
+
+Comandos usados practica 3: SAMBA4
+
+- sudo apt update && sudo apt install samba winbind krb5-config -y  
+- sudo systemctl stop smbd nmbd winbind  
+- sudo systemctl disable smbd nmbd winbind  
+- sudo mv /etc/samba/smb.conf /etc/samba/smb.conf.bak  
+- sudo samba-tool domain provision --realm=SO3.INET --domain=SO3 --server-      role=dc --dns-backend=SAMBA_INTERNAL --adminpass=[Contraseña]  
+ 
+- sudo systemctl start samba-ad-dc  
+- sudo systemctl enable samba-ad-dc  
+- sudo samba-tool user create lanegracubana --given-name=Lanegra --surname=Cubana --password=20240804  
+
+=============================================================================
+
