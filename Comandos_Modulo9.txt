@@ -1,11 +1,9 @@
 Comandos usados practica 1
 
 > sudo apt install -y apt-transport-https software-properties-common wget gnupg2
-> wget -q http://www.webmin.com/jcameron-key.asc -O- 
-> sudo apt-key add -
-> sudo add-apt-repository
-> sudo apt update
-> sudo apt install -y webmin
+> wget -q http://www.webmin.com/jcameron-key.asc -O- | sudo apt-key add -
+> sudo add-apt-repository "deb [arch=amd64] http://download.webmin.com/download/repository sarge contrib"
+> sudo apt install -y webmin 		[http://ip servidor:10000]
 
 ===========================================================================================
 
@@ -21,9 +19,7 @@ Comandos usados practica 2
 > mkdir terraform-do
 > cd
 > nano main.tf
-> su
-> ls
-> cd ..
+ 
 > cat ∼/.ssh/id_rsa.pub
 > terraform init
 > terraform apply
